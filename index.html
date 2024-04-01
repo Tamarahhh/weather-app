@@ -3,9 +3,93 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Weather App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/style.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <h1>Hello Git</h1>
+    <div class="container">
+      <header>
+        <form id="input-form">
+          <input
+            type="text"
+            placeholder="Enter a city..."
+            class="input-search"
+            id="input-search"
+          />
+          <input
+            type="submit"
+            value="Search"
+            class="search-button"
+            id="search-button"
+          />
+        </form>
+      </header>
+      <main>
+        <div class="current-weather">
+          <div>
+            <h1 class="current-city" id="current-city">Paris</h1>
+            <p class="current-update">
+              <span id="current-date"> Saturday 15:32, </span>
+              moderate rain
+              <br />
+              Humidity:
+              <strong> 87%, </strong>
+              Wind:
+              <strong> 7.2 km/h </strong>
+            </p>
+          </div>
+          <div class="current-temp">
+            <span class="temp-emoji">🌞</span><span class="temp-value">14</span
+            ><span class="temp-unit">°C</span>
+          </div>
+        </div>
+        <div class="predictions">
+          <ul>
+            <li>
+              Sun ⛅
+              <br />
+              <strong>14°C</strong>
+              - 18°C
+            </li>
+            <li>
+              Mon ⛅
+              <br />
+              <strong>14°C</strong>
+              - 18°C
+            </li>
+            <li>
+              Tue ⛅
+              <br />
+              <strong>14°C</strong>
+              - 18°C
+            </li>
+            <li>
+              Wed ⛅
+              <br />
+              <strong>14°C</strong>
+              - 18°C
+            </li>
+            <li>
+              Thu ⛅
+              <br />
+              <strong>14°C</strong>
+              - 18°C
+            </li>
+          </ul>
+        </div>
+      </main>
+      <footer>
+        This project wa coded by <a href="">Tamara Boboye</a> and is
+        <a href="">on Github</a> and <a href="">hosted on Netlify.</a>
+      </footer>
+    </div>
+    <script src="src/index.js"></script>
   </body>
 </html>
