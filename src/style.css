@@ -47,10 +47,8 @@ main {
   font-size: 48px;
 }
 .temp-emoji {
-  font-size: 35px;
-  position: relative;
-  top: -10px;
-  margin-right: 5px;
+  width: 80px;
+  height: 80px;
 }
 .temp-value {
   font-size: 70px;

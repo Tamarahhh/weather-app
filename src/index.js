@@ -84,11 +84,17 @@ function getWeather(response) {
   let humidityElement = document.querySelector("#humidity");
   let windspeed = response.data.wind.speed;
   let windspeedElement = document.querySelector("#wind");
+  let icon = response.data.condition.icon_url;
+  let iconElement = document.querySelector("#icon");
 
   tempValue.innerHTML = `${temperature}`;
   descriptionElement.innerHTML = `${description}`;
   humidityElement.innerHTML = `${humidity}%`;
   windspeedElement.innerHTML = `${windspeed}km/h`;
+  iconElement.innerHTML = `<img
+      src="${icon}"
+      class="temp-emoji"
+    />`;
 }
 
 function getWeatherData(city) {
