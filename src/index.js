@@ -42,7 +42,6 @@ function updateHeading(event) {
   let searchInput = document.querySelector("#input-search");
   let cityName = searchInput.value.trim();
   let cityNameElement = document.querySelector("#current-city");
-
   cityNameElement.innerHTML = cityName;
   getWeatherData(cityName);
 }
@@ -63,7 +62,7 @@ function displayDateTime() {
   ];
 
   let currentDay = days[day];
-  return `${currentDay} ${hours}:${minutes}`;
+  return `${currentDay} ${hours}:${minutes},`;
 }
 
 let searchButton = document.querySelector("#input-form");
@@ -79,7 +78,17 @@ function getWeather(response) {
   console.log(response);
   let temperature = Math.round(response.data.temperature.current);
   let tempValue = document.querySelector(".temp-value");
+  let description = response.data.condition.description;
+  let descriptionElement = document.querySelector("#description");
+  let humidity = response.data.temperature.humidity;
+  let humidityElement = document.querySelector("#humidity");
+  let windspeed = response.data.wind.speed;
+  let windspeedElement = document.querySelector("#wind");
+
   tempValue.innerHTML = `${temperature}`;
+  descriptionElement.innerHTML = `${description}`;
+  humidityElement.innerHTML = `${humidity}%`;
+  windspeedElement.innerHTML = `${windspeed}km/h`;
 }
 
 function getWeatherData(city) {
@@ -88,3 +97,4 @@ function getWeatherData(city) {
 
   axios.get(apiUrl).then(getWeather);
 }
+getWeatherData("Lagos");
