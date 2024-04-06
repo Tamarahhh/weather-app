@@ -1,41 +1,3 @@
-// let weather = {
-//   paris: {
-//     temp: 19.7,
-//     humidity: 80,
-//   },
-//   tokyo: {
-//     temp: 17.3,
-//     humidity: 50,
-//   },
-//   lisbon: {
-//     temp: 30.2,
-//     humidity: 20,
-//   },
-//   "san francisco": {
-//     temp: 20.9,
-//     humidity: 100,
-//   },
-//   oslo: {
-//     temp: -5,
-//     humidity: 20,
-//   },
-// };
-//
-// let cityName = prompt("Enter a city");
-
-// if (cityName.toLowerCase() in weather) {
-//   let city = weather[cityName.toLowerCase()];
-//   let tempCelsius = Math.round(city.temp);
-//   let tempFahrenheit = Math.round((city.temp * 9) / 5 + 32);
-//   let humidity = city.humidity;
-//   alert(
-//     `It is currently ${tempCelsius}°C (${tempFahrenheit}°F) in ${cityName} with a humidity of ${humidity}%`
-//   );
-// } else {
-//   alert(
-//     `Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+${cityName}`
-//   );
-
 function updateHeading(event) {
   event.preventDefault();
 
@@ -43,6 +5,7 @@ function updateHeading(event) {
   let cityName = searchInput.value.trim();
   let cityNameElement = document.querySelector("#current-city");
   cityNameElement.innerHTML = cityName;
+
   getWeatherData(cityName);
 }
 
@@ -74,6 +37,43 @@ setInterval(function () {
   currentDate.innerHTML = displayDateTime();
 }, 60000);
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+
+  return days[date.getDay()];
+}
+
+function displayPrediction(response) {
+  let predictionHtml = "";
+
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      predictionHtml += `
+    <div class="weather-prediction-day">
+            <div class="weather-prediction-date">${formatDay(day.time)}</div>
+            <div>
+            <img src="${
+              day.condition.icon_url
+            }" class="weather-prediction-icon" />
+            </div>
+            <div class="weather-prediction-temps">
+              <div class="weather-prediction-temp">
+                <strong>${Math.round(day.temperature.maximum)}°</strong>
+              </div>
+              <div class="weather-prediction-temp">${Math.round(
+                day.temperature.minimum
+              )}°</div>
+            </div>
+          </div>
+    `;
+    }
+  });
+
+  let predictionElement = document.querySelector("#prediction");
+  predictionElement.innerHTML = predictionHtml;
+}
+
 function getWeather(response) {
   console.log(response);
   let temperature = Math.round(response.data.temperature.current);
@@ -101,6 +101,17 @@ function getWeatherData(city) {
   let apiKey = "459ebc5dot18e0f03c448ce0b4cf73ac";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
 
-  axios.get(apiUrl).then(getWeather);
+  axios.get(apiUrl).then(function (response) {
+    getWeather(response);
+    getPrediction(response.data.city);
+  });
 }
+
+function getPrediction(city) {
+  let apiKey = "459ebc5dot18e0f03c448ce0b4cf73ac";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+
+  axios(apiUrl).then(displayPrediction);
+}
+
 getWeatherData("Lagos");
